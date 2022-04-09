@@ -69,6 +69,13 @@ Thanks, @nilshoerrmann, for contributing!
 - new class `Direction` for checking if one point is north, eat, south or west from another point
 - new Class `Intersection` for checking if two geometries intersect each other
 
+## [Unreleased]
+
+### Added
+
+- add class `Point` (from `Coordinate`)
+- add class `PointFactory` (from `CoordinateFactory`)
+
 ## [4.0.0] - 2021-11-29
 
 ### Changed
