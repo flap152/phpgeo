@@ -23,7 +23,7 @@ class Coordinate implements GeometryInterface
      *
      * @throws InvalidArgumentException
      */
-    public function __construct(protected float $lat, protected float $lng, Ellipsoid|null $ellipsoid = null)
+    public function __construct(protected float $lat, protected float $lng, Ellipsoid|null $ellipsoid = null, public $id)
     {
         if (! $this->isValidLatitude($lat)) {
             throw new InvalidArgumentException('Latitude value must be numeric -90.0 .. +90.0 (given: ' . $lat . ')');
