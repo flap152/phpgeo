@@ -31,6 +31,9 @@ class Coordinate implements GeometryInterface
      * @var float
      */
     protected $lng;
+    
+    
+    public $id;
 
     /**
      * @var Ellipsoid
@@ -44,7 +47,7 @@ class Coordinate implements GeometryInterface
      *
      * @throws InvalidArgumentException
      */
-    public function __construct(float $lat, float $lng, ?Ellipsoid $ellipsoid = null)
+    public function __construct(float $lat, float $lng, ?Ellipsoid $ellipsoid = null, $id)
     {
         if (! $this->isValidLatitude($lat)) {
             throw new InvalidArgumentException('Latitude value must be numeric -90.0 .. +90.0 (given: ' . $lat . ')');
@@ -58,6 +61,7 @@ class Coordinate implements GeometryInterface
 
         $this->lat = $lat;
         $this->lng = $lng;
+        $this->id = $id;
 
         if ($ellipsoid instanceof Ellipsoid) {
             $this->ellipsoid = $ellipsoid;
