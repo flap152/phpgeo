@@ -18,7 +18,7 @@ use Location\Formatter\Coordinate\FormatterInterface;
  * Please use the new `Point` class, which is an
  * API-compatible drop-in replacement.
  *
- * @deprecated
+ * @ deprecated
  */
 class Coordinate implements GeometryInterface
 {
@@ -33,7 +33,7 @@ class Coordinate implements GeometryInterface
     protected $lng;
     
     
-    public $id;
+    public null|int $id;
 
     /**
      * @var Ellipsoid
@@ -47,7 +47,7 @@ class Coordinate implements GeometryInterface
      *
      * @throws InvalidArgumentException
      */
-    public function __construct(float $lat, float $lng, ?Ellipsoid $ellipsoid = null, $id)
+    public function __construct(float $lat, float $lng, ?Ellipsoid $ellipsoid = null, ?int $id = null)
     {
         if (! $this->isValidLatitude($lat)) {
             throw new InvalidArgumentException('Latitude value must be numeric -90.0 .. +90.0 (given: ' . $lat . ')');

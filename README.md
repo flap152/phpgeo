@@ -1,4 +1,5 @@
-# phpgeo - A Simple Geo Library for PHP
+# phpgeo - A Simple Geo Library for PHP - 
+# Forked by flap152
 
 phpgeo provides abstractions to geographical coordinates (including support for different ellipsoids) and allows you to calculate geographical distances between coordinates with high precision.
 
@@ -36,7 +37,7 @@ phpgeo provides abstractions to geographical coordinates (including support for 
 
 ## Requirements
 
-Minimum required PHP version is 7.3. *phpgeo* fully supports PHP 8.
+Minimum required PHP version 8.
 
 The 3.x releases require PHP >= 7.2 but don't get feature updates any longer. Bugfixes will be backported.
 

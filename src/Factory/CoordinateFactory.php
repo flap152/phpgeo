@@ -15,7 +15,7 @@ use Location\Ellipsoid;
  * Please use the new `PointFactory` class, which is an
  * API-compatible drop-in replacement.
  *
- * @deprecated
+ * @ deprecated
  */
 class CoordinateFactory implements GeometryFactoryInterface
 {
@@ -159,7 +159,7 @@ class CoordinateFactory implements GeometryFactoryInterface
         return preg_replace_callback(
             '/(\d+)(°|\s)\s*(\d+)(\'|′|\s)(\s*([0-9\.]*))("|\'\'|″|′′)?/u',
             static function (array $matches): string {
-                return sprintf('%d %f', $matches[1], $matches[3] + (float)$matches[6] / 60);
+                return sprintf('%d %f', $matches[1], (int)$matches[3] + (float)$matches[6] / 60);
             },
             $string
         );
