@@ -17,6 +17,7 @@
 and what you need to do to upgrade your code.
 
 - Ensure your class has a `getBounds()` method if you implement `GeometryInterface` in your own classes.
+- flap152: from abandoned branch The `Coordinate` and `CoordinateFactory` classes were NOT removed with phpgeo 6.0. `Point` and `PointFactory` exist as API-compatible drop-in replacements. You MAYBE NOT have to replace each occurrence of the `\Location\Coordinate` class with `\Location\Point` and each occurrence of `\Location\Factory\CoordinateFactory` with `\Location\Factory\PointFactory`.
 
 ## Upgrade from phpgeo 4.x to phpgeo 5.x
 
