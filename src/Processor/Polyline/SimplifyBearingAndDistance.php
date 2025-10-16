@@ -21,20 +21,13 @@ use RuntimeException;
 class SimplifyBearingAndDistance implements SimplifyInterface
 {
     /**
-     * @var float
-     */
-    private $bearingAngle;
-    private $distanceLimit;
-
-    /**
      * SimplifyBearing constructor.
      *
      * @param float $bearingAngle
+     * @param int $distanceLimit in meters
      */
-    public function __construct(float $bearingAngle, int $distanceLimit)
+    public function __construct(protected float $bearingAngle, protected int $distanceLimit)
     {
-        $this->bearingAngle = $bearingAngle;
-        $this->distanceLimit = $distanceLimit;
     }
 
     /**
@@ -126,12 +119,13 @@ class SimplifyBearingAndDistance implements SimplifyInterface
             );
 
             $newSegmentLength = $distanceCalc->getDistance($points[$index], $points[$index + 1]);
-            $distanceFromLast = $distanceCalc->getDistance($points[$lastPointAddedIndex], $points[$index ]) + $newSegmentLength;
-            $distanceBoth = $distanceCalc->getDistance($points[$index - 1], $points[$index ]) + $newSegmentLength;
+            $distanceFromLast = $distanceCalc->getDistance($points[$lastPointAddedIndex], $points[$index])
+                + $newSegmentLength;
+            $distanceBoth = $distanceCalc->getDistance($points[$index - 1], $points[$index]) + $newSegmentLength;
             if (
-                $distanceBoth > min(5, $this->distanceLimit / 3)  && $bearingDifference > ($this->bearingAngle * 2) ||
-                $distanceBoth > min(10, $this->distanceLimit / 3)  && $bearingDifference > $this->bearingAngle ||
-                $distanceFromLast > min(10, $this->distanceLimit / 3)  && $bearingDifference > $this->bearingAngle
+                $distanceBoth > min(5, $this->distanceLimit / 3) && $bearingDifference > ($this->bearingAngle * 2) ||
+                $distanceBoth > min(10, $this->distanceLimit / 3) && $bearingDifference > $this->bearingAngle ||
+                $distanceFromLast > min(10, $this->distanceLimit / 3) && $bearingDifference > $this->bearingAngle
             ) {
                 $result->addPoint($points[$index]);
                 $lastPointAddedIndex = $index;

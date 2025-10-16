@@ -4,7 +4,7 @@ UPLOAD_PATH=phpgeo.marcusjaschen.de
 PHP ?= php
 
 .PHONY: docs
-docs: daux apidocs
+docs: daux
 
 .PHONY: daux
 daux:
@@ -12,26 +12,12 @@ daux:
 	mkdir -p build/daux
 	docker run --rm -v "$(PWD)":/src -w /src daux/daux.io daux generate -d build/daux
 
-.PHONY: apidocs
-apidocs:
-	mkdir -p build
-	mkdir -p build/coverage
-	$(PHP) ./vendor/bin/phploc --log-xml=build/phploc.xml src tests
-	$(PHP) ./vendor/bin/phpcs --report-xml=build/phpcs.xml src
-	$(PHP) ./vendor/bin/phpunit --coverage-xml build/coverage --coverage-html build/coverage
-	$(PHP) ./vendor/bin/phpdox
-
 .PHONY: clean
 clean:
 	rm -Rf build
 
 .PHONY: upload_docs
-upload_docs: docs upload_doc_site
-	ssh $(UPLOAD_HOST) "mkdir -p $(UPLOAD_PATH)/api"
-	rsync --recursive --delete build/apidocs/html/ $(UPLOAD_HOST):$(UPLOAD_PATH)/api/
-
-.PHONY: upload_doc_site
-upload_doc_site: daux
+upload_docs: docs
 	rsync --recursive --delete build/daux/ $(UPLOAD_HOST):$(UPLOAD_PATH)/
 
 .PHONY: ci

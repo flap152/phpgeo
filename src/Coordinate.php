@@ -9,36 +9,12 @@ use Location\CardinalDirection\CardinalDirectionDistances;
 use Location\CardinalDirection\CardinalDirectionDistancesCalculator;
 use Location\Distance\DistanceInterface;
 use Location\Distance\Haversine;
+use Location\Exception\InvalidGeometryException;
 use Location\Formatter\Coordinate\FormatterInterface;
 
-/**
- * Coordinate Implementation
- *
- * This class will be removed in release 6.0.
- * Please use the new `Point` class, which is an
- * API-compatible drop-in replacement.
- *
- * @ deprecated
- */
 class Coordinate implements GeometryInterface
 {
-    /**
-     * @var float
-     */
-    protected $lat;
-
-    /**
-     * @var float
-     */
-    protected $lng;
-    
-    
-    public null|int $id;
-
-    /**
-     * @var Ellipsoid
-     */
-    protected $ellipsoid;
+    protected Ellipsoid $ellipsoid;
 
     /**
      * @param float $lat -90.0 .. +90.0
@@ -47,8 +23,12 @@ class Coordinate implements GeometryInterface
      *
      * @throws InvalidArgumentException
      */
-    public function __construct(float $lat, float $lng, ?Ellipsoid $ellipsoid = null, ?int $id = null)
-    {
+    public function __construct(
+        protected float $lat,
+        protected float $lng,
+        Ellipsoid|null $ellipsoid = null,
+        public ?int $id = null
+    ) {
         if (! $this->isValidLatitude($lat)) {
             throw new InvalidArgumentException('Latitude value must be numeric -90.0 .. +90.0 (given: ' . $lat . ')');
         }
@@ -58,10 +38,6 @@ class Coordinate implements GeometryInterface
                 'Longitude value must be numeric -180.0 .. +180.0 (given: ' . $lng . ')'
             );
         }
-
-        $this->lat = $lat;
-        $this->lng = $lng;
-        $this->id = $id;
 
         if ($ellipsoid instanceof Ellipsoid) {
             $this->ellipsoid = $ellipsoid;
@@ -129,6 +105,24 @@ class Coordinate implements GeometryInterface
         return $this->getDistance($coordinate, new Haversine()) <= $allowedDistance;
     }
 
+    /**
+     * Checks if this point intersects a given geometry.
+     *
+     * @throws InvalidGeometryException
+     */
+    public function intersects(GeometryInterface $geometry): bool
+    {
+        if ($geometry instanceof self) {
+            return $this->hasSameLocation($geometry);
+        }
+
+        if ($geometry instanceof Polygon) {
+            return $geometry->contains($this);
+        }
+
+        throw new InvalidGeometryException('Only polygons can contain other geometries', 1655191821);
+    }
+
     public function format(FormatterInterface $formatter): string
     {
         return $formatter->format($this);
@@ -151,5 +145,15 @@ class Coordinate implements GeometryInterface
     protected function isNumericInBounds(float $value, float $lower, float $upper): bool
     {
         return !($value < $lower || $value > $upper);
+    }
+
+    public function getBounds(): Bounds
+    {
+        return new Bounds($this, $this);
+    }
+
+    public function getSegments(): never
+    {
+        throw new \RuntimeException('A single point instance does not contain valid segments', 6029644914);
     }
 }

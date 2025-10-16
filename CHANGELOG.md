@@ -3,17 +3,78 @@
 All notable changes to `mjaschen/phpgeo` will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [6.0.0]
+
+**Warning: Backwards-compatibility-breaking changes** (see README for upgrade details)
+
+### Added
+
+- Support for PHP 8.4
+- `GeometryLinesInterface` for geometries containing lines (`Line`, `Polyline`, `Polygon`)
+- `getBounds()` method to `GeometryInterface`
+
+### Removed
+
+- Support for PHP 8.1
+
+### Changed
+
+- Replaced Psalm with PHPStan for static code analysis
+
+## [5.0.0]
+
+**Warning: Backwards-compatibility-breaking changes**
+
+### Removed
+
+- Support for PHP 7.3, 7.4 and 8.0
+- deprecated methods `setPoint1()` and `setPoint2()` from `Line`
+
+### Changed
+
+- `master` is now renamed to `main`
+- `GeometryFactoryInterface::fromString()` now has `GeometryInterface` as return type
+
+### Deprecated
+
+- deprecated methods `getDestination()` and `getBearingFinal()` from `DirectVincentyBearing`
+- deprecated methods `getDistance()`, `getBearingInitial()` and `getBearingFinal()` from `InverseVincentyBearing`
+- deprecated methods `getX()`, `getY()` and `getZ()` from `Cartesian`
+- deprecated methods `getPoint1()` and `getPoint2()` from `Line`
+
+## [4.2.1] - 2023-12-03
+
+### Changed
+
+- use proper variable as index for array access
+
+## [4.2.0] - 2022-07-25
+
+### Changed
+
+- point-to-line distance is calculated iteratively now, fixes #92
+- improved intersection checking for polygon/polygon
+
+## [4.1.0] - 2022-06-03
+
+This release has no breaking changes.
+
+Thanks, @nilshoerrmann, for contributing!
+
+### Added
+
+- method `Bounds::getAsPolygon()` which returns a polygon containing the four nodes of the Bounds instance
+- methods `Bounds::getNorthEast()` and `Bounds::getSouthWest()`
+- new public methods: `CardinalDirection::isStrictlyNorth()`, `CardinalDirection::isStrictlyEast()`, `CardinalDirection::isStrictlySouth()` and `CardinalDirection::isStrictlyWest()`
+- new class `Direction` for checking if one point is north, eat, south or west from another point
+- new Class `Intersection` for checking if two geometries intersect each other
+
 ## [Unreleased]
 
 ### Added
 
-- add class `Point` (successor for `Coordinate`)
-- add class `PointFactory` (successor for `CoordinateFactory`)
-
-### Deprecated
-
-- `Coordinate` class is now deprecated and will be removed in the release after the next
-- `CoordinateFactory` class is now deprecated and will be removed in the release after the next
+- add class `Point` (from `Coordinate`)
+- add class `PointFactory` (from `CoordinateFactory`)
 
 ## [4.0.0] - 2021-11-29
 

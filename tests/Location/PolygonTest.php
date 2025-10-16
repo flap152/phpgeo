@@ -26,6 +26,26 @@ class PolygonTest extends TestCase
         $this->assertEquals([$point1, $point2], $polygon->getPoints());
     }
 
+    public function testIfAddPointsArrayWorksAsExpected(): void
+    {
+        $polygon = new Polygon();
+
+        $this->assertEquals([], $polygon->getPoints());
+
+        $point0 = new Coordinate(0, 10);
+        $polygon->addPoint($point0);
+
+        $this->assertEquals([$point0], $polygon->getPoints());
+
+        $point1 = new Coordinate(10, 10);
+        $point2 = new Coordinate(10, 20);
+
+        $points = [$point1, $point2];
+        $polygon->addPoints($points);
+
+        $this->assertEquals([$point0, $point1, $point2], $polygon->getPoints());
+    }
+
     public function testIfGetNumberOfPointsWorksAsExpected(): void
     {
         $polygon = new Polygon();
@@ -208,6 +228,7 @@ class PolygonTest extends TestCase
 
         // https://geographiclib.sourceforge.io/cgi-bin/Planimeter?type=polygon&rhumb=geodesic&input=0.0000000000+0.0000000000%0D%0A0.0000000000+0.0008983153%0D%0A0.0009043695+0.0008983153%0D%0A0.0009043695+0.0000000000&norm=decdegrees&option=Submit
         //$this->assertEquals(10000.0, $polygon->getArea(), '', 1.0);
+        $this->markTestIncomplete('algorithm error margin 10044 vs 10000');
     }
 
     public function testIfPolygonContainsGeometryWithPolygonInsideWorksAsExpected(): void

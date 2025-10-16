@@ -1,6 +1,10 @@
 # Upgrading phpgeo
 
-## (not yet released) Update from phpgeo 5.x to phpgeo 6.x
+### Upgrade from phpgeo 5.x to phpgeo 6.x
+
+### Requirements
+
+- *phpgeo* 6.x requires at least PHP 8.2.
 
 ### Update phpgeo
 
@@ -9,13 +13,34 @@
 
 ### Update Your Code
 
-- The `Coordinate` and `CoordinateFactory` classes were removed with phpgeo 6.0. With `Point` and `PointFactory` exist API-compatible drop-in replacements. You have to replace each occurrence of the `\Location\Coordinate` class with `\Location\Point` and each occurrence of `\Location\Factory\CoordinateFactory` with `\Location\Factory\PointFactory`.
+*phpgeo* has some breaking changes in the 6.x release line. Please refer to the following list to see what has changed
+and what you need to do to upgrade your code.
 
-## Update from phpgeo 3.x to phpgeo 4.x
+- Ensure your class has a `getBounds()` method if you implement `GeometryInterface` in your own classes.
+- flap152: from abandoned branch The `Coordinate` and `CoordinateFactory` classes were NOT removed with phpgeo 6.0. `Point` and `PointFactory` exist as API-compatible drop-in replacements. You MAYBE NOT have to replace each occurrence of the `\Location\Coordinate` class with `\Location\Point` and each occurrence of `\Location\Factory\CoordinateFactory` with `\Location\Factory\PointFactory`.
+
+## Upgrade from phpgeo 4.x to phpgeo 5.x
 
 ### Requirements
 
-- _phpgeo_ 4.x requires at least PHP 7.3 and fully supports PHP 8
+- *phpgeo* 5.x requires at least PHP 8.1.
+
+### Update phpgeo
+
+- run `composer require mjaschen/phpgeo:^5.0` or
+- update the version constraint in your `composer.json` to `^5.0` and run `composer update`
+
+### Update Your Code
+
+`setPoint1()` and `setPoint2()` methods were removed from `Line` – the `Line` class now is immutable. Use the constructor to create a new instance of `Line`.
+
+There are some new deprecations introduced in 5.0, please see the [change log](https://github.com/mjaschen/phpgeo/blob/main/CHANGELOG.md) for a detailed list and update your code accordingly to be prepared for 6.0.
+
+## Upgrade from phpgeo 3.x to phpgeo 4.x
+
+### Requirements
+
+- *phpgeo* 4.x requires at least PHP 7.3 and fully supports PHP 8
 
 ### Update phpgeo
 
@@ -29,11 +54,11 @@
 
 No breaking changes were introduced with *phpgeo* 3.0.
 
-## Update from phpgeo 2.x to phpgeo 3.x
+## Upgrade from phpgeo 2.x to phpgeo 3.x
 
 ### Requirements
 
-- _phpgeo_ 3.x requires at least PHP 7.2
+- *phpgeo* 3.x requires at least PHP 7.2
 
 ### Update phpgeo
 
